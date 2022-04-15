@@ -1,16 +1,27 @@
-html,
-body {
+* {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+header, main {
+  padding: 20px 30px;
+}
+
+header nav {
+  display: flex;
+  gap: 15px;
+}
+
+header nav a {
+  color: #000;
+}
+
+header nav a:hover {
+  color: blue;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
 }
