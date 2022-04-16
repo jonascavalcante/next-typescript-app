@@ -24,7 +24,7 @@ const Posts = ({ title, posts }: Props) => {
             <div key={id}>
               <h3>{title}</h3>
               <p>{body}</p>
-              <Link href={`/blog/${id}`}>Go to post</Link>
+              <Link href={`/posts/${id}`}>Go to post</Link>
             </div>
           ))}
         </section>
