@@ -3,7 +3,6 @@ import Link from "next/link";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 
-import { Post } from "../../types/Post";
 import { Task } from "../../types/Task";
 
 type Props = {

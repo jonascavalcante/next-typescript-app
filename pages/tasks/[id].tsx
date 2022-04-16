@@ -1,5 +1,6 @@
-import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
+import { useEffect, useState } from "react";
 
 import Head from "../../components/Head";
 import Header from "../../components/Header";
@@ -7,58 +8,70 @@ import Header from "../../components/Header";
 import { Task } from "../../types/Task";
 
 type Props = {
-  task: Task;
+  id: string;
 }
-
-const Task = ({ task }: Props) => {
-  return (
-    <div>
-      <Head title={task.title} />
-
-      <Header />
-
-      <main>
-        <h1>{task.title}</h1>
-        <section>
-          <input type="checkbox" checked={task.completed} readOnly />
-        </section>
-      </main>
-    </div>
-  );
-}
-
-export const getStaticPaths = async () => {
-  let res = await fetch(`https://jsonplaceholder.typicode.com/todos`);
-  const tasks: Task[] = await res.json();
-
-  const paths = tasks?.map((task) => ({
-    params: {
-      id: task.id.toString(),
-    }
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
-interface IParams extends ParsedUrlQuery {
+interface IQuery extends ParsedUrlQuery {
   id: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+const Task = () => {
 
-  const { id } = context.params as IParams;
+  const [task, setTask] = useState<Task>({
+    userId: 0,
+    id: 0,
+    title: '',
+    completed: false,
+  });
 
-  const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
-  const task = await res.json();
+  const [loading, setLoading] = useState(false);
 
-  return {
-    props: {
-      task
-    },
+  const router = useRouter();
+  const { id } = router.query as IQuery;
+
+  useEffect(() => {
+    if (id !== undefined) {
+      loadTaks({ id });
+    }
+  }, [id])
+
+  const loadTaks = async ({ id }: Props) => {
+    setLoading(true);
+    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
+    const task = await res.json();
+
+    setTimeout(() => {
+      setTask(task);
+      setLoading(false);
+    }, 500);
   }
+
+  return (
+    (loading)
+      ? (
+        <div>
+          <Head title="Loading" />
+
+          <Header />
+
+          <main>
+            <h1>Loading</h1>
+          </main>
+        </div>
+      ) : (
+        <div>
+          <Head title={task.title} />
+
+          <Header />
+
+          <main>
+            <h1>{task.title}</h1>
+            <section>
+              <input type="checkbox" checked={task.completed} readOnly />
+            </section>
+          </main>
+        </div>
+      )
+  );
 }
 
 export default Task;
