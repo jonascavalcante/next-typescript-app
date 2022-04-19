@@ -35,7 +35,7 @@ const Posts = ({ title, posts }: Props) => {
 
 export const getStaticProps = async () => {
 
-  let res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+  let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/posts`);
   const posts: Post[] = await res.json();
 
   return {

@@ -36,7 +36,7 @@ const Task = () => {
 
   const loadTaks = async ({ id }: Props) => {
     setLoading(true);
-    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/todos/${id}`);
     const task = await res.json();
 
     setTimeout(() => {

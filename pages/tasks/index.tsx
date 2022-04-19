@@ -34,8 +34,7 @@ const Tasks = ({ title, tasks }: Props) => {
 }
 
 export const getServerSideProps = async () => {
-
-  let res = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+  let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/todos`);
   const tasks: Task[] = await res.json();
 
   return {
